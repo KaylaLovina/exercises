@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Input Nama</title>
+</head>
+<body>
+
+  <h1>Input Your Name</h1>
+  <input type="text" id="InputNama" placeholder="Masukkan nama anda">
+  <button onclick="document.getElementById('demo').innerHTML = '<h2>Hello ' + document.getElementById('InputNama').value + '</h2>'">Klik</button>
+
+  <p id="demo"></p>
+
+  <p id="tulisan">Tulisan ini tidak akan berubah</p>
+
+  <script>
+    document.getElementById("demo").innerHTML = "<h2>Meow</h2>";
+  </script>
+
+  <button onclick="document.getElementById('demo').innerHTML = '<h2>Gabisa</h2>'">masa sih</button>
+  <button onclick="document.getElementById('demo').innerHTML = '<h2>Gabisa juga wleeee</h2>'">coba lagi</button>
+
+  <button onclick="document.getElementById('tulisan').innerHTML = '<p>Hihihi bisa ternyata</p>'">last button nih</button>
+
+</body>
+</html>
