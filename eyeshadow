@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>What is Your Favorite Eyeshadow Color?</h2>
+
+<p>Choose your favorite eyeshadow color.</p>
+
+<p>Gorgeous colors that you obviously love it!</p>
+
+<button onclick="document.getElementById('myImage').src='https://i.pinimg.com/736x/d0/67/55/d067558386acc8c193bc185dbb48a9e1.jpg'">#1</button>
+
+<button onclick="document.getElementById('myImage').src='https://i.pinimg.com/736x/c0/8f/67/c08f67e7e37fc53bb0f80115330a2a8f.jpg'">#2</button>
+
+<button onclick="document.getElementById('myImage').src='https://i.pinimg.com/736x/3a/a1/4e/3aa14eb37209ac5252a65ff7c84f53d4.jpg'">#3</button>
+
+<button onclick="document.getElementById('myImage').src='https://i.pinimg.com/736x/9a/51/02/9a510245f7eda64a4af920ac1ca611c8.jpg'">#4</button><br>
+
+<img id="myImage" src="https://i.pinimg.com/736x/e1/da/93/e1da93fcc7de16258ee58f219ec57bc4.jpg" style="width:200px">
+
+</body>
+</html>
