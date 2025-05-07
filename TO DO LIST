@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>To-Do List with Waktu</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 400px;
+      margin: auto;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin: 10px 0;
+      padding: 10px;
+      background:#f3c8dd;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    button {
+      background: #4b1535;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+    .input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    input[type="time"] {
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>To-Do List</h1>
+
+  <div class="input-group">
+    <input type="text" id="taskInput" placeholder="Add a new task" />
+    <input type="time" id="timeInput" />
+  </div>
+  
+  <button id="addTask">Add Task + Time</button>
+  <ul id="taskList"></ul>
+
+  <script>
+    const taskInput = document.getElementById('taskInput');
+    const timeInput = document.getElementById('timeInput');
+    const addTaskButton = document.getElementById('addTask');
+    const taskList = document.getElementById('taskList');
+
+    function loadTasks() {
+      const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      tasks.forEach(task => addTaskToDOM(task));
+    }
+
+    function saveTasks() {
+      const tasks = Array.from(taskList.children).map(item =>
+        item.textContent.replace('Remove', '').trim()
+      );
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    function addTaskToDOM(task) {
+      const li = document.createElement('li');
+      li.textContent = task;
+
+      const removeButton = document.createElement('button');
+      removeButton.textContent = 'Remove';
+      removeButton.onclick = () => {
+        li.remove();
+        saveTasks();
+      };
+
+      li.appendChild(removeButton);
+      taskList.appendChild(li);
+    }
+
+    addTaskButton.onclick = () => {
+      const task = taskInput.value.trim();
+      const time = timeInput.value;
+
+      if (task && time) {
+        const formatted = ${task}, jam ${time};
+        addTaskToDOM(formatted);
+        saveTasks();
+        taskInput.value = '';
+        timeInput.value = '';
+      } else {
+        alert('Please fill your time!')
+      }
+    };
+
+    loadTasks();
+  </script>
+</body>
+</html>
