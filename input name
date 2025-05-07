@@ -21,6 +21,8 @@
   <button onclick="document.getElementById('demo').innerHTML = '<h2>Gabisa juga wleeee</h2>'">coba lagi</button>
 
   <button onclick="document.getElementById('tulisan').innerHTML = '<p>Hihihi bisa ternyata</p>'">last button nih</button>
+  
+<button onclick="document.body.style.backgroundColor = 'lightblue'">Change Background</button>
 
 </body>
 </html>
