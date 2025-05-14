@@ -2,57 +2,120 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>To-Do List with Waktu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kayla's To-Do List</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Orbitron', sans-serif;
+    }
     body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      max-width: 400px;
+      background-image: url('https://i.pinimg.com/736x/2c/46/be/2c46be6492e71b2e4704608021fd5b5e.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+      max-width: 500px;
       margin: auto;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: white;
+    }
+    .input-group {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .input-group input,
+    .input-group button {
+      flex: unset;
+    }
+    input[type="text"], input[type="time"] {
+      flex: 1;
+      padding: 10px;
+      border: 2px solid #2f97ba;
+      border-radius: 5px;
+      outline: none;
+    }
+    button {
+      background: #2f97ba;
+      color: white;
+      border: none;
+      padding: 10px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #22778e;
+      animation: glitch 1s infinite;
     }
     ul {
       list-style: none;
       padding: 0;
     }
     li {
-      margin: 10px 0;
-      padding: 10px;
-      background:#f3c8dd;
-      border-radius: 5px;
+      background: #ffffffdd;
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-    button {
-      background: #4b1535;
+    .footer {
+      text-align: center;
+      font-size: 0.9em;
+      margin-top: 40px;
       color: white;
-      border: none;
-      border-radius: 5px;
-      padding: 5px 10px;
-      cursor: pointer;
-      margin-top: 5px;
     }
-    .input-group {
+    input[type="text"], input[type="time"], button {
+      border: 2px solid #2c87d1;
+      transition: all 0.3s ease;
+    }
+    input[type="text"]:focus, input[type="time"]:focus, button:hover {
+      border-color: #5e165e;
+      box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+    }
+    .gif-container {
       display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 20px;
     }
-    input[type="time"] {
-      padding: 5px;
+    .gif-left, .gif-right {
+      width: 50px;
+      height: 50px;
     }
   </style>
 </head>
 <body>
-  <h1>To-Do List</h1>
+
+  <div class="gif-container">
+    <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExamRkeHVhN3dyYTd5cGtwZjh2MjlsOGVqenU2emc2cnBoNHR2MzJueCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0hv8d4HrDVI6m7w7pF/giphy.gif" class="gif-left" alt="Left Gif">
+    <h1>To-Do List</h1>
+    <img src="https://i.pinimg.com/originals/9d/b7/c3/9db7c3c53d8e436bc32f303ff01c022c.gif" class="gif-right" alt="Right Gif">
+  </div>
 
   <div class="input-group">
-    <input type="text" id="taskInput" placeholder="Add a new task" />
-    <input type="time" id="timeInput" />
+    <input type="text" id="taskInput" placeholder="Add a new list...">
+    <input type="time" id="timeInput">
+    <button id="addTask">Add List</button>
   </div>
-  
-  <button id="addTask">Add Task + Time</button>
+
   <ul id="taskList"></ul>
+
+  <div class="footer">&copy; 2025 Made by Kei</div>
 
   <script>
     const taskInput = document.getElementById('taskInput');
@@ -67,23 +130,25 @@
 
     function saveTasks() {
       const tasks = Array.from(taskList.children).map(item =>
-        item.textContent.replace('Remove', '').trim()
+        item.querySelector('span').textContent
       );
       localStorage.setItem('tasks', JSON.stringify(tasks));
     }
 
-    function addTaskToDOM(task) {
+    function addTaskToDOM(taskText) {
       const li = document.createElement('li');
-      li.textContent = task;
+      const span = document.createElement('span');
+      span.textContent = taskText;
 
-      const removeButton = document.createElement('button');
-      removeButton.textContent = 'Remove';
-      removeButton.onclick = () => {
+      const removeBtn = document.createElement('button');
+      removeBtn.textContent = 'Hapus';
+      removeBtn.onclick = () => {
         li.remove();
         saveTasks();
       };
 
-      li.appendChild(removeButton);
+      li.appendChild(span);
+      li.appendChild(removeBtn);
       taskList.appendChild(li);
     }
 
@@ -91,15 +156,17 @@
       const task = taskInput.value.trim();
       const time = timeInput.value;
 
-      if (task && time) {
-        const formatted = ${task}, jam ${time};
-        addTaskToDOM(formatted);
-        saveTasks();
-        taskInput.value = '';
-        timeInput.value = '';
-      } else {
-        alert('Please fill your time!')
+      if (!task || !time) {
+        alert('Please fill the task and time first.');
+        return;
       }
+
+      const taskText = `${task}, jam ${time}`;
+      addTaskToDOM(taskText);
+      saveTasks();
+
+      taskInput.value = '';
+      timeInput.value = '';
     };
 
     loadTasks();
